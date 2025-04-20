@@ -21,6 +21,7 @@
   transition: background-color 0.5s ease;
   font-family: "Poppins", "sans-serif";
   font-size: large;
+  color: #4f0a01;
 }
 
 .pages button:hover {

@@ -5,8 +5,8 @@ const functieEroare = require("../utils/errorsManager").functieEroare;
 const controller = {
   getAllEvents: async (req, res) => {
     try {
-      const event = await EvenimentDb.findAll();
-      res.status(200).json(event);
+      const events = await EvenimentDb.findAll();
+      res.status(200).json(events);
     } catch (err) {
       functieEroare("Eroare la returnarea evenimentelor", res);
     }
