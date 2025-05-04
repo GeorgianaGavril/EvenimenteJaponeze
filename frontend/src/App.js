@@ -1,12 +1,14 @@
 import "./App.css";
-import Calendar from "./Pages/Calendar";
-// import Home from "./Pages/Home";
+// import Calendar from "./Pages/Calendar";
+import Tickets from "./Pages/Tickets";
+// import Home fr/om "./Pages/Home";
 // import Login from "./Pages/Login";
 
 function App() {
   return (
     <div>
-      <Calendar />
+      <Tickets />
+      {/* <Calendar /> */}
       {/* <Home /> */}
       {/* <Login /> */}
     </div>

@@ -1,0 +1,290 @@
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap");
+body {
+  background-color: #fffbf1;
+  padding-bottom: 30px;
+}
+
+.title {
+  font-family: "Domine", serif;
+  font-size: 60px;
+  color: #4d221d;
+  margin-bottom: 10px;
+}
+
+.header {
+  padding: 50px 80px;
+}
+
+.divider {
+  height: 5px;
+  width: 150px;
+  background-color: #dbb8d2;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.map {
+  display: flex;
+  flex-direction: column;
+}
+.event-page {
+  background-color: #fffbf1;
+  color: #4d221d;
+  font-family: "Poppins", sans-serif;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.event-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: transparent;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buy-type {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: transparent;
+  border-radius: 8px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.event-section.light-bg {
+  background-color: #fff2e8;
+}
+
+.buy-type.method-border {
+  border: 3px solid #eddacc;
+  padding-top: 18px;
+  margin-top: 60px;
+}
+
+.event-section h2 {
+  font-family: "Domine", serif;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.event-section p,
+.event-section ul {
+  font-size: 18px;
+  line-height: 1.7;
+  list-style: none;
+  padding: 0;
+}
+
+.event-section ul li {
+  margin-bottom: 10px;
+}
+
+.ticket-categories-manual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ticket-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.ticket-category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+  background-color: #fff2e8;
+  padding: 15px 25px;
+  border-radius: 8px;
+}
+
+.category-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.counter-btn {
+  background-color: #763932;
+  color: #fff8f2;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.counter-btn:hover {
+  background-color: #a45c49;
+}
+
+.ticket-categories li,
+.ticket-categories-manual li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.category-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.category-circle.vip {
+  background-color: #8c4b7c;
+}
+
+.category-circle.loja {
+  background-color: #4f0a01;
+}
+
+.category-circle.standard {
+  background-color: #a67c52;
+}
+
+.selection-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+}
+
+.selection-toggle input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #763932;
+}
+
+.selection-toggle label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.auto-selection h2 {
+  padding-top: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.buy {
+  margin: 30px auto;
+  padding: 10px 40px;
+  max-width: 500px;
+  text-align: center;
+  animation: fade-in 0.5s ease-in-out;
+  font-family: "Poppins", sans-serif;
+}
+
+.buy-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #763932;
+}
+
+.buy-button {
+  background-color: #ceabbf;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4f0a01;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #ab8098;
+  color: #763932;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.fade-switch {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-switch h2 {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.fade-switch.hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}

@@ -7,6 +7,7 @@ const locRouter = require("./loc");
 const salaRouter = require("./sala");
 const biletRouter = require("./bilet");
 const authRouter = require("./auth");
+const artistRouter = require("./artist");
 
 router.use("/reset", resetRouter);
 router.use("/user", userRouter);
@@ -15,5 +16,6 @@ router.use("/loc", locRouter);
 router.use("/sala", salaRouter);
 router.use("/bilet", biletRouter);
 router.use("/auth", authRouter);
+router.use("/artist", artistRouter);
 
 module.exports = router;

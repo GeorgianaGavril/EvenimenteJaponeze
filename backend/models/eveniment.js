@@ -23,15 +23,23 @@ const EvenimentModel = (sequelize, DataTypes) => {
       descriere: {
         type: DataTypes.TEXT,
         allowNull: true,
-        // validate: {
-        //   len: {
-        //     args: [2, 2000],
-        //     msg: "Descrierea este prea lunga!",
-        //   },
-        // },
+        validate: {
+          len: {
+            args: [2, 8000],
+            msg: "Descrierea este prea lunga!",
+          },
+        },
       },
-      pretBilet: {
-        type: DataTypes.FLOAT,
+      pretStandard: {
+        type: DataTypes.FLOAT(5, 2),
+        allowNull: true,
+      },
+      pretLoja: {
+        type: DataTypes.FLOAT(5, 2),
+        allowNull: true,
+      },
+      pretVIP: {
+        type: DataTypes.FLOAT(5, 2),
         allowNull: true,
       },
     },

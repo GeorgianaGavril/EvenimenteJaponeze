@@ -1,5 +1,9 @@
 const BiletDb = require("../models").Bilet;
-const { functieEroare } = require("../utils/errorsManager");
+const EventDb = require("../models").Eveniment;
+const {
+  functieEroare,
+  verificaExistentaEntitate,
+} = require("../utils/errorsManager");
 
 const controller = {
   getAllBilete: async (req, res) => {
@@ -27,12 +31,9 @@ const controller = {
   getBiletById: async (req, res) => {
     const id = req.params.id;
     try {
-      const bilet = await BiletDb.findByPk(id);
-
+      const bilet = await verificaExistentaEntitate(BiletDb, id, res, "bilet");
       if (!bilet) {
-        return res
-          .status(404)
-          .send({ message: "Nu exista bilet cu acest ID!" });
+        return;
       }
 
       res.status(200).json(bilet);
@@ -41,15 +42,38 @@ const controller = {
     }
   },
 
+  getBileteByEvent: async (req, res) => {
+    const evenimentId = req.params.evenimentId;
+    try {
+      const event = await verificaExistentaEntitate(
+        EventDb,
+        evenimentId,
+        res,
+        "eveniment"
+      );
+      if (!event) {
+        return;
+      }
+
+      const bilete = await BiletDb.findAll({
+        where: { evenimentId: evenimentId },
+      });
+      res.status(200).json(bilete);
+    } catch (err) {
+      functieEroare(
+        err,
+        `Eroare la returnarea biletelor pentru evenimentul ${evenimentId}`,
+        res
+      );
+    }
+  },
+
   deleteBiletById: async (req, res) => {
     const id = req.params.id;
     try {
-      const bilet = await BiletDb.findByPk(id);
-
+      const bilet = await verificaExistentaEntitate(BiletDb, id, res, "bilet");
       if (!bilet) {
-        return res
-          .status(404)
-          .send({ message: "Nu exista bilet cu acest ID!" });
+        return;
       }
 
       await bilet.destroy();

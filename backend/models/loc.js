@@ -7,11 +7,11 @@ const LocModel = (sequelize, DataTypes) => {
         allowNull: false,
       },
       rand: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       categorie: {
-        type: DataTypes.ENUM("standard", "loja", "balcon", "VIP"),
+        type: DataTypes.ENUM("standard", "loja", "VIP"),
         allowNull: false,
       },
     },

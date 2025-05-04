@@ -1,6 +1,9 @@
 const EvenimentDb = require("../models").Eveniment;
 const SalaDb = require("../models").Sala;
-const functieEroare = require("../utils/errorsManager").functieEroare;
+const {
+  functieEroare,
+  verificaExistentaEntitate,
+} = require("../utils/errorsManager");
 
 const controller = {
   getAllEvents: async (req, res) => {
@@ -33,12 +36,14 @@ const controller = {
   getEventById: async (req, res) => {
     const id = req.params.id;
     try {
-      const event = await EvenimentDb.findByPk(id);
-
+      const event = await verificaExistentaEntitate(
+        EvenimentDb,
+        id,
+        res,
+        "event"
+      );
       if (!event) {
-        return res
-          .status(404)
-          .send({ message: "Nu exista eveniment cu acest id!" });
+        return;
       }
 
       res.status(200).json(event);
@@ -52,12 +57,14 @@ const controller = {
     const salaId = req.params.salaId;
     const toUpdate = req.body;
     try {
-      const event = await EvenimentDb.findByPk(id);
-
+      const event = await verificaExistentaEntitate(
+        EvenimentDb,
+        id,
+        res,
+        "event"
+      );
       if (!event) {
-        return res
-          .status(404)
-          .send({ message: "Nu exista eveniment cu acest id!" });
+        return;
       }
 
       await event.update(toUpdate);
@@ -70,12 +77,14 @@ const controller = {
   deleteEventById: async (req, res) => {
     const id = req.params.id;
     try {
-      const event = await EvenimentDb.findByPk(id);
-
+      const event = await verificaExistentaEntitate(
+        EvenimentDb,
+        id,
+        res,
+        "event"
+      );
       if (!event) {
-        return res
-          .status(404)
-          .send({ message: "Nu exista eveniment cu acest id!" });
+        return;
       }
 
       await event.destroy();

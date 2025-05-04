@@ -1,5 +1,8 @@
 const UserDb = require("../models").User;
-const functieEroare = require("../utils/errorsManager").functieEroare;
+const {
+  functieEroare,
+  verificaExistentaEntitate,
+} = require("../utils/errorsManager");
 const bcrypt = require("bcrypt");
 
 const controller = {
@@ -39,10 +42,11 @@ const controller = {
     const id = req.params.id;
 
     try {
-      const user = await UserDb.findByPk(id);
+      const user = await verificaExistentaEntitate(UserDb, id, res, "user");
       if (!user) {
-        return res.status(404).send({ message: "Nu exista user cu acest id!" });
+        return;
       }
+
       res.status(200).json(user);
     } catch (err) {
       functieEroare(err, "Eroare la returnarea utilizatorului!", res);
@@ -54,9 +58,9 @@ const controller = {
     const toUpdate = req.body;
 
     try {
-      const user = await UserDb.findByPk(id);
+      const user = await verificaExistentaEntitate(UserDb, id, res, "user");
       if (!user) {
-        return res.status(404).send({ message: "Nu exista user cu acest id!" });
+        return;
       }
 
       await user.update(toUpdate);
@@ -70,9 +74,9 @@ const controller = {
     const id = req.params.id;
 
     try {
-      const user = await UserDb.findByPk(id);
+      const user = await verificaExistentaEntitate(UserDb, id, res, "user");
       if (!user) {
-        return res.status(404).send({ message: "Nu exista user cu acest id!" });
+        return;
       }
 
       await user.destroy();

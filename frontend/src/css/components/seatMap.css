@@ -1,0 +1,75 @@
+.seat {
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.text {
+  fill: #fff;
+}
+
+.seat-circle {
+  fill: #eaddc8;
+  transition: all 0.3s ease;
+  stroke: black;
+}
+
+.seat.reserved .seat-circle {
+  fill: #999 !important;
+  stroke: #444 !important;
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+.seat.reserved .text {
+  cursor: default;
+}
+
+.vip {
+  fill: #8c4b7c;
+}
+
+.loja {
+  fill: #4f0a01;
+}
+
+.balcon {
+  fill: #a67c52;
+}
+
+.seat:hover .seat-circle {
+  stroke: #763932;
+  stroke-width: 2;
+  fill: #d6b8a5;
+}
+
+.seat.selected .seat-circle {
+  fill: #fff2e8;
+  stroke: #4f0a01;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px rgba(79, 10, 1, 0.8));
+}
+
+.seat.selected .text {
+  fill: #4f0a01;
+  font-weight: bold;
+}
+
+svg {
+  max-width: 1500px;
+  height: auto;
+}
+
+.sala-wrapper {
+  padding: 25px;
+}
+
+.sala-wrapper svg {
+  width: 50%;
+  max-width: 1200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px black;
+  border-radius: 10px;
+}

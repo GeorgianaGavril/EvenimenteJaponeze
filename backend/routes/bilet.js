@@ -7,6 +7,7 @@ router.post(
   "/user/:userId/eveniment/:evenimentId",
   biletController.createBilet
 );
+router.get("/event/:evenimentId", biletController.getBileteByEvent);
 router.get("/:id", biletController.getBiletById);
 router.delete("/:id", biletController.deleteBiletById);
 

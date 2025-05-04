@@ -94,10 +94,7 @@ function Calendar() {
               <strong>Data:</strong> {format(selectedDate, "dd.MM.yyyy")}
             </h6>
             <h6>
-              <strong>Ora:</strong>{" "}
-              {/* {format(eventsMap.get(selectedDate)?.data, "dd.MM.yyyy hh:mm", {
-                locale: ro,
-              })} */}
+              <strong>Ora:</strong>
               {eventsMap.get(selectedDate)?.data.slice(11, 16)}
             </h6>
             <h6>
