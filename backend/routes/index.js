@@ -8,6 +8,7 @@ const salaRouter = require("./sala");
 const biletRouter = require("./bilet");
 const authRouter = require("./auth");
 const artistRouter = require("./artist");
+const stripeRouter = require("./stripe");
 
 router.use("/reset", resetRouter);
 router.use("/user", userRouter);
@@ -17,5 +18,6 @@ router.use("/sala", salaRouter);
 router.use("/bilet", biletRouter);
 router.use("/auth", authRouter);
 router.use("/artist", artistRouter);
+router.use("/stripe", stripeRouter);
 
 module.exports = router;

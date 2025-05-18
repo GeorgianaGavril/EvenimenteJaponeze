@@ -291,21 +291,45 @@ function Tickets() {
       });
 
       if (toateAcelasiRand && consecutive) {
-        return grup; // ✅ grupul ideal găsit
+        return grup;
       }
     }
 
-    // Dacă nu s-a găsit grup perfect, returnează primele N locuri disponibile
     return locuriSortate.slice(0, numarBilete);
   };
 
-  const handleBuy = () => {
+  const handleBuy = async () => {
     if (modSelectie === "automat") {
       console.log(
         alocaAutomat(locuriDisponibile, vipCounter, "VIP"),
         alocaAutomat(locuriDisponibile, lojaCounter, "loja"),
         alocaAutomat(locuriDisponibile, standardCounter, "standard")
       );
+
+      const vip = alocaAutomat(locuriDisponibile, vipCounter, "VIP");
+      const loja = alocaAutomat(locuriDisponibile, lojaCounter, "loja");
+      const standard = alocaAutomat(
+        locuriDisponibile,
+        standardCounter,
+        "standard"
+      );
+
+      try {
+        const res = await axios.post(
+          "http://localhost:3004/api/stripe/checkout",
+          {
+            pret: pretTotal,
+            bilete: [...vip, ...loja, ...standard],
+            pretVIP: event?.pretVIP,
+            pretStandard: event?.pretStandard,
+            pretLoja: event?.pretLoja,
+          }
+        );
+
+        window.location.href = res.data.url;
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
