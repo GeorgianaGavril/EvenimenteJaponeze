@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "../css/pages/login.css";
+import React, { useState } from "react";
+import styles from "../css/pages/login.module.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -63,24 +63,23 @@ export default function SignUp({ toggle }) {
         toast.error("Eroare la crearea contului!");
       }
     } else {
-      console.log(validateForm());
       console.log("Eroare la completarea datelor!");
     }
   }
 
   return (
-    <>
-      <div className="signup">
-        <div className="left">
+    <div className={styles["page-wrapper"]}>
+      <div className={`${styles.signin} ${styles.signup}`}>
+        <div className={styles.left}>
           <h1>Bine ai venit!</h1>
           <br></br>
           <h5>Ai deja cont?</h5>
           <button onClick={toggle}>Autentificare</button>
         </div>
-        <div className="right">
+        <div className={styles.right}>
           <h3>Creare cont</h3>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <div className="form-group">
+          <form onSubmit={handleSubmit}>
+            <div className={styles["form-group"]}>
               <input
                 type="text"
                 name="nume"
@@ -88,9 +87,9 @@ export default function SignUp({ toggle }) {
                 value={nume}
                 onChange={(e) => setNume(e.target.value)}
               />
-              {erori.nume ? <small>{erori.nume}</small> : undefined}
+              {erori.nume && <small>{erori.nume}</small>}
             </div>
-            <div className="form-group">
+            <div className={styles["form-group"]}>
               <input
                 type="text"
                 name="prenume"
@@ -98,9 +97,9 @@ export default function SignUp({ toggle }) {
                 value={prenume}
                 onChange={(e) => setPrenume(e.target.value)}
               />
-              {erori.prenume ? <small>{erori.prenume}</small> : undefined}
+              {erori.prenume && <small>{erori.prenume}</small>}
             </div>
-            <div className="form-group">
+            <div className={styles["form-group"]}>
               <input
                 type="text"
                 name="email"
@@ -108,9 +107,9 @@ export default function SignUp({ toggle }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {erori.email ? <small>{erori.email}</small> : undefined}
+              {erori.email && <small>{erori.email}</small>}
             </div>
-            <div className="form-group">
+            <div className={styles["form-group"]}>
               <input
                 type="password"
                 name="parola"
@@ -118,9 +117,9 @@ export default function SignUp({ toggle }) {
                 value={parola}
                 onChange={(e) => setParola(e.target.value)}
               />
-              {erori.parola ? <small>{erori.parola}</small> : undefined}
+              {erori.parola && <small>{erori.parola}</small>}
             </div>
-            <div className="form-group">
+            <div className={styles["form-group"]}>
               <input
                 type="password"
                 name="confirmaParola"
@@ -128,17 +127,13 @@ export default function SignUp({ toggle }) {
                 value={confirmaParola}
                 onChange={(e) => setConfirmaParola(e.target.value)}
               />
-              {erori.confirmaParola ? (
-                <small>{erori.confirmaParola}</small>
-              ) : undefined}
+              {erori.confirmaParola && <small>{erori.confirmaParola}</small>}
             </div>
-            <button>Înscrie-te</button>
+            <button type="submit">Înscrie-te</button>
           </form>
         </div>
       </div>
-      <div>
-        <ToastContainer />
-      </div>
-    </>
+      <ToastContainer />
+    </div>
   );
 }

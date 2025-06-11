@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import SeatMap from "../Components/SeatMap";
-import "../css/pages/tickets.css";
+import styles from "../css/pages/tickets.module.css";
 import axios from "axios";
 import { format } from "date-fns";
 import Button from "react-bootstrap/Button";
 
 function Tickets() {
+  const { id } = useParams();
+  const [reservationId, setReservationId] = useState(null);
+
   const [event, setEvent] = useState(null);
   const [artisti, setArtisti] = useState([]);
   const [modSelectie, setModSelectie] = useState(null);
@@ -102,7 +106,7 @@ function Tickets() {
 
   async function getEventById() {
     try {
-      const res = await axios.get("http://localhost:3004/api/event/1");
+      const res = await axios.get(`http://localhost:3004/api/event/${id}`);
       setEvent(res.data);
     } catch (err) {
       console.error("Eroare la returnarea evenimentului: ", err);
@@ -111,7 +115,7 @@ function Tickets() {
 
   async function getAllArtisti() {
     try {
-      const res = await axios.get("http://localhost:3004/api/artist");
+      const res = await axios.get(`http://localhost:3004/api/artist/${id}`);
       setArtisti(res.data);
     } catch (err) {
       console.error("Eroare la returnarea artistilor: ", err);
@@ -147,7 +151,9 @@ function Tickets() {
 
   async function getBileteForEvent() {
     try {
-      const res = await axios.get("http://localhost:3004/api/bilet/event/1");
+      const res = await axios.get(
+        `http://localhost:3004/api/bilet/event/${id}`
+      );
 
       const bilete = res.data;
       const locuriDisponibile = locuri.filter(
@@ -183,7 +189,7 @@ function Tickets() {
       setVipLocuriValabile(vipLocuriMax - vip);
     } catch (err) {
       console.error(
-        "Eroare la returnarea biletelor la evenimentul cu id 1: ",
+        `Eroare la returnarea biletelor la evenimentul cu id ${id}: `,
         err
       );
     }
@@ -298,14 +304,20 @@ function Tickets() {
     return locuriSortate.slice(0, numarBilete);
   };
 
-  const handleBuy = async () => {
-    if (modSelectie === "automat") {
-      console.log(
-        alocaAutomat(locuriDisponibile, vipCounter, "VIP"),
-        alocaAutomat(locuriDisponibile, lojaCounter, "loja"),
-        alocaAutomat(locuriDisponibile, standardCounter, "standard")
-      );
+  const alocaManual = (locuriDisponibile) => {
+    const locuriDeCumparat = [];
+    locuriDisponibile.forEach((loc) => {
+      const randSiScaun = loc.rand + "_" + loc.scaun;
+      if (selectedSeats.includes(randSiScaun)) {
+        locuriDeCumparat.push(loc);
+      }
+    });
+    return locuriDeCumparat;
+  };
 
+  const handleBuy = async () => {
+    let bilete = [];
+    if (modSelectie === "automat") {
       const vip = alocaAutomat(locuriDisponibile, vipCounter, "VIP");
       const loja = alocaAutomat(locuriDisponibile, lojaCounter, "loja");
       const standard = alocaAutomat(
@@ -313,69 +325,53 @@ function Tickets() {
         standardCounter,
         "standard"
       );
+      bilete = [...vip, ...loja, ...standard];
+    } else {
+      bilete = alocaManual(locuriDisponibile);
+    }
 
-      try {
-        const res = await axios.post(
-          "http://localhost:3004/api/stripe/checkout",
-          {
-            pret: pretTotal,
-            bilete: [...vip, ...loja, ...standard],
-            pretVIP: event?.pretVIP,
-            pretStandard: event?.pretStandard,
-            pretLoja: event?.pretLoja,
-          }
-        );
+    try {
+      // 1. Inițiem checkout-ul Stripe (prima dată!)
+      const {
+        data: { url, sessionId },
+      } = await axios.post("http://localhost:3004/api/stripe/checkout", {
+        email: "georgianagavril401@gmail.com",
+        eventId: event.id,
+        bilete,
+        pretVIP: event.pretVIP,
+        pretStandard: event.pretStandard,
+        pretLoja: event.pretLoja,
+      });
 
-        window.location.href = res.data.url;
-      } catch (err) {
-        console.log(err);
-      }
+      // 2. Construim biletele finale și le salvăm în DB cu sessionId ca reservationId
+      const bileteFinale = bilete.map((loc) => ({
+        reservationId: sessionId,
+        locId: loc.id,
+        userId: 1,
+        evenimentId: id,
+      }));
+
+      await axios.post("http://localhost:3004/api/bilet/all", {
+        bilete: bileteFinale,
+      });
+
+      // 3. Redirect către Stripe
+      window.location.href = url;
+    } catch (err) {
+      console.error("Eroare la procesul de cumpărare:", err);
+      alert("A apărut o eroare. Vă rugăm să încercați din nou.");
     }
   };
 
-  async function creareLocuri() {
-    const svg = document.getElementById("Sala1");
-    const allGroups = svg.querySelectorAll("g[id]");
-    const groups = [].slice.call(allGroups, 1);
-
-    const locuri = [];
-
-    groups.forEach((g) => {
-      let categorie;
-      if (g.id.split("_")[0][0] === "L") {
-        categorie = "loja";
-      } else if (Number(g.id.split("_")[0].slice(1)) > 5) {
-        categorie = "standard";
-      } else {
-        categorie = "VIP";
-      }
-
-      const [rand, scaun] = g.id.split("_");
-
-      locuri.push({
-        scaun: parseInt(scaun),
-        rand,
-        categorie,
-        salaId: 1,
-      });
-    });
-
-    try {
-      await axios.post("http://localhost:3004/api/loc/all", locuri);
-    } catch (err) {
-      console.error("Eroare la bulk create locuri: ", err);
-    }
-  }
-
   return (
-    <div className="event-page">
+    <div className={`${styles["event-page"]} ${styles["page-wrapper"]}`}>
       <Navbar />
-      <section className="hero">
-        <h1 className="title">{event?.titlu}</h1>
-        <div className="divider"></div>
+      <section className={styles.hero}>
+        <h1 className={styles.title}>{event?.titlu}</h1>
+        <div className={styles.divider}></div>
       </section>
 
-      <section className="event-section">
+      <section className={styles["event-section"]}>
         <h2>Descriere</h2>
         <p>
           {event?.descriere.split("\n").map((line, i) => (
@@ -401,7 +397,7 @@ function Tickets() {
         </h5>
       </section>
 
-      <section className="event-section light-bg">
+      <section className={`${styles["event-section"]} ${styles["light-bg"]}`}>
         <h2>Distribuție</h2>
         <ul>
           {artisti
@@ -417,9 +413,9 @@ function Tickets() {
         </ul>
       </section>
 
-      <section className="buy-type method-border">
+      <section className={`${styles["buy-type"]} ${styles["method-border"]}`}>
         <h2>Selectați modalitatea de alocare a locurilor:</h2>
-        <div className="selection-toggle">
+        <div className={styles["selection-toggle"]}>
           <label>
             <input
               type="radio"
@@ -444,19 +440,26 @@ function Tickets() {
 
       {modSelectie === "manual" && (
         <div ref={sectiuneRef} className="fade-in">
-          <section className="buy-type">
-            <ul className="ticket-categories-manual">
+          <section className={styles["buy-type"]}>
+            <ul className={styles["ticket-categories-manual"]}>
               <li>
-                <span className="category-circle vip"></span> VIP:{" "}
-                {event?.pretVIP} RON ({vipLocuriValabile} / {vipLocuriMax})
+                <span
+                  className={`${styles["category-circle"]} ${styles.vip}`}
+                ></span>{" "}
+                VIP: {event?.pretVIP} RON ({vipLocuriValabile} / {vipLocuriMax})
               </li>
               <li>
-                <span className="category-circle loja"></span> Lojă:{" "}
-                {event?.pretLoja} RON ({lojaLocuriValabile} / {lojaLocuriMax})
+                <span
+                  className={`${styles["category-circle"]} ${styles.loja}`}
+                ></span>{" "}
+                Lojă: {event?.pretLoja} RON ({lojaLocuriValabile} /{" "}
+                {lojaLocuriMax})
               </li>
               <li>
-                <span className="category-circle standard"></span> Standard:{" "}
-                {event?.pretStandard} RON ({standardLocuriValabile} /{" "}
+                <span
+                  className={`${styles["category-circle"]} ${styles.standard}`}
+                ></span>{" "}
+                Standard: {event?.pretStandard} RON ({standardLocuriValabile} /{" "}
                 {standardLocuriMax})
               </li>
             </ul>
@@ -471,61 +474,73 @@ function Tickets() {
       )}
 
       {modSelectie === "automat" && (
-        <div ref={sectiuneRef} className="auto-selection fade-in">
+        <div
+          ref={sectiuneRef}
+          className={`${styles["auto-selection"]} ${styles["fade-in"]}`}
+        >
           <h2>Alege numărul de bilete</h2>
-          <div className="ticket-categories">
-            <div className="ticket-category">
-              <div className="category-info">
-                <span className="category-circle vip"></span>
+          <div className={styles["ticket-categories"]}>
+            <div className={styles["ticket-category"]}>
+              <div className={styles["category-info"]}>
+                <span
+                  className={`${styles["category-circle"]} ${styles.vip}`}
+                ></span>
                 <span>
                   VIP - {event?.pretVIP} RON ({vipLocuriValabile} /{" "}
                   {vipLocuriMax})
                 </span>
               </div>
-              <div className="counter">
-                <button className="counter-btn" onClick={scadeVip}>
+              <div className={styles.counter}>
+                <button className={styles["counter-btn"]} onClick={scadeVip}>
                   -
                 </button>
                 <span>{vipCounter}</span>
-                <button className="counter-btn" onClick={addVip}>
+                <button className={styles["counter-btn"]} onClick={addVip}>
                   +
                 </button>
               </div>
             </div>
 
-            <div className="ticket-category">
-              <div className="category-info">
-                <span className="category-circle loja"></span>
+            <div className={styles["ticket-category"]}>
+              <div className={styles["category-info"]}>
+                <span
+                  className={`${styles["category-circle"]} ${styles.loja}`}
+                ></span>
                 <span>
                   Lojă - {event?.pretLoja} RON ({lojaLocuriValabile} /{" "}
                   {lojaLocuriMax})
                 </span>
               </div>
-              <div className="counter">
-                <button className="counter-btn" onClick={scadeLoja}>
+              <div className={styles.counter}>
+                <button className={styles["counter-btn"]} onClick={scadeLoja}>
                   -
                 </button>
                 <span>{lojaCounter}</span>
-                <button className="counter-btn" onClick={addLoja}>
+                <button className={styles["counter-btn"]} onClick={addLoja}>
                   +
                 </button>
               </div>
             </div>
 
-            <div className="ticket-category">
-              <div className="category-info">
-                <span className="category-circle standard"></span>
+            <div className={styles["ticket-category"]}>
+              <div className={styles["category-info"]}>
+                <span
+                  className={`${styles["category-circle"]} ${styles.standard}`}
+                ></span>
                 <span>
                   Standard - {event?.pretStandard} RON ({standardLocuriValabile}{" "}
                   / {standardLocuriMax})
                 </span>
               </div>
-              <div className="counter">
-                <button className="counter-btn" onClick={scadeStandard}>
+              <div className={styles.counter}>
+                <button
+                  className={styles["counter-btn"]}
+                  onClick={scadeStandard}
+                >
                   -
                 </button>
                 <span>{standardCounter}</span>
-                <button className="counter-btn" onClick={addStandard}>
+                <button className={styles["counter-btn"]} onClick={addStandard}>
                   +
                 </button>
               </div>
@@ -536,19 +551,21 @@ function Tickets() {
 
       {(afiseazaBuy || selectedSeats.length > 0) && (
         <div
-          className={`buy ${pretTotal > 0 ? "fade-in" : "fade-out"}`}
+          className={`${styles.buy} ${
+            pretTotal > 0 ? styles["fade-in"] : styles["fade-out"]
+          }`}
           onAnimationEnd={() => {
             if (pretTotal === 0) setAfiseazaBuy(false);
           }}
         >
-          <h2 className="buy-title">Preț total: {pretTotal.toFixed(2)} RON</h2>
-          <Button onClick={handleBuy} className="buy-button">
+          <h2 className={styles["buy-type"]}>
+            Preț total: {pretTotal.toFixed(2)} RON
+          </h2>
+          <Button onClick={handleBuy} className={styles["buy-button"]}>
             Cumpără biletele
           </Button>
         </div>
       )}
-
-      {/* <Button onClick={creareLocuri}>Trimite locurile în baza de date</Button> */}
     </div>
   );
 }

@@ -5,6 +5,7 @@ const locController = require("./loc");
 const salaController = require("./sala");
 const biletController = require("./bilet");
 const artistController = require("./artist");
+const eventServiceController = require("./eveniment");
 
 const controllers = {
   connection,
@@ -14,6 +15,7 @@ const controllers = {
   salaController,
   biletController,
   artistController,
+  eventServiceController,
 };
 
 module.exports = controllers;

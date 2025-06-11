@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "../css/components/seatMap.css";
+import styles from "../css/components/seatMap.module.css";
 import axios from "axios";
 
 function SeatMap({
@@ -15,40 +15,51 @@ function SeatMap({
     if (!svg) return;
 
     requestAnimationFrame(() => {
+      // Preluăm toate grupurile de locuri (excludem primul <g>)
       const groups = Array.from(svg.querySelectorAll("g[id]")).slice(1);
 
       groups.forEach((g) => {
         const id = g.id;
         const circle = g.querySelector("circle");
-        const text = g.querySelector("path");
+        const textPath = g.querySelector("path");
 
-        g.classList.add("seat");
-        circle?.classList.add("seat-circle");
-        text?.classList.add("text");
+        // Clasa de bază pentru scaun
+        g.classList.add(styles.seat);
+        circle?.classList.add(styles["seat-circle"]);
+        textPath?.classList.add(styles.text);
 
+        // Dacă scaunul e rezervat
         if (locuriCumparate.includes(id)) {
-          g.classList.add("reserved");
+          g.classList.add(styles.reserved);
           return;
         }
 
-        if (/^R?[1-5]$/.test(id.split("_")[0])) {
-          circle?.classList.add("vip");
-        } else if (id.split("_")[0].includes("Loja")) {
-          circle?.classList.add("loja");
+        // Clasificăm pe categorii
+        const prefix = id.split("_")[0];
+        if (/^R?[1-5]$/.test(prefix)) {
+          circle?.classList.add(styles.vip);
+        } else if (prefix.includes("Loja")) {
+          circle?.classList.add(styles.loja);
         } else {
-          circle?.classList.add("balcon");
+          circle?.classList.add(styles.balcon);
         }
 
-        g.classList.toggle("selected", selectedSeats.includes(id));
+        // Adăugăm clasa 'selected' dacă e selectat
+        if (selectedSeats.includes(id)) {
+          g.classList.add(styles.selected);
+        } else {
+          g.classList.remove(styles.selected);
+        }
 
+        // Click handler
         g.onclick = () => {
           const esteSelectat = selectedSeats.includes(id);
-          const nouSelectate = esteSelectat
+          const newSelection = esteSelectat
             ? selectedSeats.filter((s) => s !== id)
             : [...selectedSeats, id];
 
-          setSelectedSeats(nouSelectate);
-          calculeazaTotal(nouSelectate);
+          setSelectedSeats(newSelection);
+          calculeazaTotal(newSelection);
         };
       });
     });
@@ -88,7 +99,7 @@ function SeatMap({
   }
 
   return (
-    <div className="sala-wrapper" ref={svgRef}>
+    <div className={styles["sala-wrapper"]} ref={svgRef}>
       <svg
         width="656"
         height="436"

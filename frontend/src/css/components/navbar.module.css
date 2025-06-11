@@ -8,6 +8,11 @@
   gap: 15px;
 }
 
+.pages {
+  display: flex;
+  align-items: center;
+}
+
 .pages button {
   margin-left: 20px;
   margin-right: 20px;
@@ -21,6 +26,7 @@
   transition: background-color 0.5s ease;
   font-family: "Poppins", "sans-serif";
   font-size: large;
+  font-weight: 500;
   color: #4f0a01;
 }
 

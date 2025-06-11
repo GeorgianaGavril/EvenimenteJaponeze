@@ -1,0 +1,137 @@
+.page-wrapper {
+  min-height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3%;
+  padding-bottom: 40px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.signin {
+  display: flex;
+  width: 800px;
+  max-width: 90vw;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.left,
+.right {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left {
+  background-color: #ffffff;
+  flex: 2;
+  text-align: center;
+}
+
+.right {
+  flex: 1;
+  background-color: #763932;
+  color: #fffbf1;
+  text-align: center;
+}
+
+.left h3 {
+  margin-bottom: 20px;
+  color: #4f0a01;
+  font-size: 24px;
+}
+
+.right h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.right h5 {
+  font-weight: normal;
+  margin-bottom: 20px;
+  color: #fffbf1;
+}
+
+form input {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 10px 0;
+  border: 1px solid #dbb8d2;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #763932;
+  box-shadow: 0 0 0 2px #fffbf1;
+}
+
+form button,
+.signup form button {
+  margin-top: 20px;
+  padding: 12px 32px;
+  background-color: #4f0a01;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  width: auto;
+}
+
+form button:hover,
+.signup form button:hover {
+  background-color: #763932;
+}
+
+.right button,
+.signup .left button {
+  background-color: #fffbf1;
+  color: #4f0a01;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.right button:hover,
+.signup .left button:hover {
+  background-color: #e4ceba;
+}
+
+/* doar pentru SignUp — inversăm vizual */
+.signup .left {
+  flex: 1;
+  background-color: #763932;
+  color: #fffbf1;
+  text-align: center;
+}
+
+.signup .right {
+  flex: 2;
+  color: #4f0a01;
+  background-color: #ffffff;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-group small {
+  color: #d33030;
+  margin-top: 4px;
+  font-size: 13px;
+}

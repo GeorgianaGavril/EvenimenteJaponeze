@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap");
+
+.pageWrapper {
+  background-color: #fffbf1;
+}
+
+.title {
+  text-align: center;
+  font-family: "Domine", "Regular 400";
+  font-size: 50px;
+  color: #763932;
+}
+
+.divider {
+  height: 5px;
+  width: 150px;
+  background-color: #763932;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.calendarWrapper {
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.customCalendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #763932;
+  color: #e4ceba;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.navBtn {
+  background: none;
+  border: none;
+  color: #e4ceba;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navBtn:hover {
+  color: #ecded0;
+}
+
+.dateEvent {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  padding: 50px 80px;
+  flex-wrap: wrap;
+}
+
+.eventCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  width: 650px;
+  height: 400px;
+  padding: 30px 40px;
+  background-color: #763932;
+  border-left: 6px solid #e4ceba;
+  border-radius: 8px;
+  color: #e4ceba;
+  font-family: "Poppins", sans-serif;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.eventCard h2,
+.eventCard p,
+.eventCard button {
+  font-family: "Domine", "Regular 400";
+}
+
+.eventCard h2 {
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.eventCard p {
+  font-size: 15px;
+  line-height: 1.6;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.eventCard button {
+  margin-top: 20px;
+  background-color: #e4ceba;
+  color: #763932;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.eventCard button:hover {
+  background-color: #b9997a;
+  color: #763932;
+}

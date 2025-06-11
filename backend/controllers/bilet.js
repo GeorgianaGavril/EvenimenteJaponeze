@@ -28,6 +28,23 @@ const controller = {
     }
   },
 
+  bulkCreateBilete: async (req, res) => {
+    try {
+      const { bilete } = req.body;
+
+      if (!Array.isArray(bilete)) {
+        return res
+          .status(400)
+          .send({ message: "Trebuie trimis array de bilete!" });
+      }
+
+      await BiletDb.bulkCreate(bilete);
+      res.status(201).send({ message: "Bilete introduse cu succes!" });
+    } catch (err) {
+      functieEroare(err, "Eroare la crearea biletelor!", res);
+    }
+  },
+
   getBiletById: async (req, res) => {
     const id = req.params.id;
     try {

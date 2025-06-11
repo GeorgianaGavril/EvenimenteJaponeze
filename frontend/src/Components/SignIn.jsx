@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../css/pages/login.css";
+import styles from "../css/pages/login.module.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,41 +27,34 @@ export default function SignIn({ toggle }) {
   }
 
   return (
-    <>
-      <div className="signin">
-        <div className="left">
+    <div className={styles["page-wrapper"]}>
+      <div className={styles.signin}>
+        <div className={styles.left}>
           <h3>Autentificare</h3>
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={handleSubmit}>
             <input
-              className="form-group"
               type="text"
-              name="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              className="form-group"
               type="password"
-              name="parola"
               placeholder="Parolă"
               value={parola}
               onChange={(e) => setParola(e.target.value)}
             />
-            <button>Conectează-te</button>
+            <button type="submit">Conectează-te</button>
           </form>
         </div>
-        <div className="right">
+        <div className={styles.right}>
           <h1>Bine ai revenit!</h1>
           <br></br>
           <h5>Nu ai cont?</h5>
           <button onClick={toggle}>Înscrie-te aici!</button>
         </div>
       </div>
-
-      <div>
-        <ToastContainer />
-      </div>
-    </>
+      <ToastContainer />
+    </div>
   );
 }

@@ -1,19 +1,23 @@
-import React from "react";
-import "../css/components/navbar.css";
+import { Link } from "react-router-dom";
+import styles from "../css/components/navbar.module.css";
 import sakuraStage from "../assets/images/Sakura Stage (1).png";
 
 function Navbar() {
   return (
-    <div className="navbar">
+    <div className={styles.navbar}>
       <div>
         <img src={sakuraStage} width={150} alt="Logo" />
       </div>
-      <div className="pages">
-        <button>Acasă</button>
-        <button>Calendar</button>
-        <button>Evenimente</button>
-        <button>Despre noi</button>
-        <button>Contact</button>
+      <div className={styles.pages}>
+        <Link to="/">
+          <button>Acasă</button>
+        </Link>
+        <Link to="/calendar">
+          <button>Calendar</button>
+        </Link>
+        <Link to="/account">
+          <button>Cont</button>
+        </Link>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 const ArtistDb = require("../models").Artist;
+const Evenimentdb = require("../models").Eveniment;
 const {
   functieEroare,
   verificaExistentaEntitate,
@@ -8,6 +9,29 @@ const controller = {
   getAllArtisti: async (req, res) => {
     try {
       const artisti = await ArtistDb.findAll();
+      res.status(200).json(artisti);
+    } catch (err) {
+      functieEroare(err, "Eroare la returnarea artistilor!", res);
+    }
+  },
+
+  getArtistiByEvent: async (req, res) => {
+    const eventId = req.params.evenimentId;
+
+    try {
+      const event = await verificaExistentaEntitate(
+        Evenimentdb,
+        eventId,
+        res,
+        "eveniment"
+      );
+      if (!event) {
+        return;
+      }
+
+      const artisti = await ArtistDb.findAll({
+        where: { evenimentId: eventId },
+      });
       res.status(200).json(artisti);
     } catch (err) {
       functieEroare(err, "Eroare la returnarea artistilor!", res);

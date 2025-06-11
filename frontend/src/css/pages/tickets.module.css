@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap");
-body {
+.page-wrapper {
   background-color: #fffbf1;
   padding-bottom: 30px;
 }
