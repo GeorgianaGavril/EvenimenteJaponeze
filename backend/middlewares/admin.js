@@ -1,18 +1,28 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const requireAdmin = (req, res, next) => {
-  const authHeader = req.headers.authorization; // Bearer token
-  if (!authHeader) return res.status(401).json({ message: "Fără token" });
+const controller = {
+  verifyAdmin: (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).send({ message: "Acces neautorizat" });
+    }
 
-  const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== "admin")
-      return res.status(403).json({ message: "Acces interzis" });
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.status(403).send({ message: "Token invalid!" });
+      }
 
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: "Token invalid" });
-  }
+      if (decoded.tip !== "admin") {
+        return res
+          .status(403)
+          .send({ message: "Acces interzis - doar pentru admini" });
+      }
+
+      req.user = decoded;
+      next();
+    });
+  },
 };
+
+module.exports = controller;

@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const eventController = require("../controllers").eventController;
+const { verifyAdmin } = require("../middlewares/admin");
 
 router.get("/", eventController.getAllEvents);
-router.post("/:salaId", eventController.createEvent);
+router.post("/:salaId", verifyAdmin, eventController.createEvent);
 router.get("/:id", eventController.getEventById);
-router.patch("/:id", eventController.updateEventById);
-router.delete("/:id", eventController.deleteEventById);
+router.patch("/:id", verifyAdmin, eventController.updateEventById);
+router.delete("/:id", verifyAdmin, eventController.deleteEventById);
 
 module.exports = router;

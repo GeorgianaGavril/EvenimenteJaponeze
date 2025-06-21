@@ -38,18 +38,50 @@
 }
 
 .intro-section .welcome button {
-  font-family: "Poppins", sans-serif;
-  font-size: 18px;
-  background-color: var(--accent-color);
+  position: relative;
+  background: linear-gradient(135deg, #e2c9dc, #e1add7);
+  color: #763932;
   border: none;
-  color: var(--text-color);
-  border-radius: 20px;
-  padding: 10px 20px;
-  transition: background-color 0.3s ease;
+  padding: 10px 24px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .intro-section .welcome button:hover {
-  background-color: #ceabbf;
+  filter: brightness(1.05);
+  transform: scale(1.03);
+}
+
+.intro-section .welcome button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shine 2.5s infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
 }
 
 .intro-section {

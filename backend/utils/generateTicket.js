@@ -3,7 +3,6 @@ const PDFDocument = require("pdfkit");
 const QRCode = require("qrcode");
 const path = require("path");
 
-// generateTicketPDF(...) – rămâne semnătura
 const generateTicketPDF = async (
   bilete,
   recipientEmail,
@@ -13,7 +12,6 @@ const generateTicketPDF = async (
 ) => {
   return new Promise(async (resolve, reject) => {
     try {
-      // Extragem datele evenimentului
       const {
         titlu: eventTitle,
         data: eventDate,
@@ -23,12 +21,8 @@ const generateTicketPDF = async (
         pretVIP,
       } = eventObj;
 
-      // Creăm documentul PDF
       const doc = new PDFDocument({ margin: 0, size: "A4" });
 
-      // *** AICI ÎNREGISTRĂM FONTURILE Animate ***
-      // Folosește path.join pentru a fi sigur că găsește corect fișierul,
-      // indiferent de sistemul de operare.
       doc.registerFont(
         "Roboto",
         path.join(__dirname, "../fonts/Roboto-Regular.ttf")
@@ -61,10 +55,8 @@ const generateTicketPDF = async (
             break;
         }
 
-        // 1) HEADER colorat sus
         doc.rect(0, 0, doc.page.width, 120).fill("#8c4b7c");
 
-        // În loc să folosim "Helvetica-Bold", folosim acum "Roboto-Bold"
         doc
           .fillColor("white")
           .font("Roboto-Bold")
@@ -76,7 +68,6 @@ const generateTicketPDF = async (
           .fontSize(12)
           .text("www.sakurastage.ro", 0, 75, { align: "center" });
 
-        // 2) Sub-header: Titlu eveniment, data/ora, sala
         const formattedEventDate = eventDate
           ? new Date(eventDate).toLocaleString("ro-RO", {
               day: "2-digit",
@@ -96,7 +87,6 @@ const generateTicketPDF = async (
           .text(`Data & ora: ${formattedEventDate}`, 50);
         doc.font("Roboto").fontSize(14).text(`${salaId}`, 50);
 
-        // 3) Chenar bilet
         const boxX = 50;
         const boxY = 240;
         const boxWidth = doc.page.width - 100;
@@ -108,7 +98,6 @@ const generateTicketPDF = async (
           .stroke("#763932");
         doc.restore();
 
-        // 3.1) Text în chenar
         doc
           .font("Roboto-Bold")
           .fontSize(16)
@@ -136,7 +125,6 @@ const generateTicketPDF = async (
           .font("Roboto")
           .text(`Preț: ${price.toFixed(2)} RON`, boxX + 15, boxY + 95);
 
-        // 4) QR Code
         const qrContent = `https://sakurastage.ro/verify/${encodeURIComponent(
           recipientEmail
         )}/ticket-${i + 1}`;
@@ -153,7 +141,6 @@ const generateTicketPDF = async (
           }
         );
 
-        // 5) Footer cu data comenzii și număr comanda
         const footerY = 420;
         doc
           .font("Roboto-Italic")
@@ -170,12 +157,10 @@ const generateTicketPDF = async (
             50,
             footerY
           );
-        // Dacă vrei să afișezi ID-ul sesiunii Stripe:
         doc
           .font("Roboto-Italic")
           .text(`Număr comandă: ${sessionId || "N/A"}`, 50, footerY + 15);
 
-        // Adaugă pagină nouă dacă mai sunt bilete
         if (i < bilete.length - 1) {
           doc.addPage();
         }

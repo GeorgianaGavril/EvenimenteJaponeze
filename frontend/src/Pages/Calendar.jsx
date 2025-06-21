@@ -15,6 +15,14 @@ function Calendar() {
   const [dates, setDates] = useState([]);
   const [eventsMap, setEventsMap] = useState(new Map());
 
+  const [fadeClass, setFadeClass] = useState("fade-in");
+
+  useEffect(() => {
+    setFadeClass("fade-out");
+    const timeout = setTimeout(() => setFadeClass("fade-in"), 300);
+    return () => clearTimeout(timeout);
+  }, [selectedDate]);
+
   useEffect(() => {
     getAllEvents();
   }, []);
@@ -86,25 +94,28 @@ function Calendar() {
           />
         </div>
 
-        <div className={styles.eventCard}>
-          <h2>{eventsMap.get(selectedDate)?.titlu}</h2>
-          <p>{eventsMap.get(selectedDate)?.descriere}</p>
-          <div>
-            <h6>
-              <strong>Data:</strong> {format(selectedDate, "dd.MM.yyyy")}
-            </h6>
-            <h6>
-              <strong>Ora:</strong>{" "}
-              {eventsMap.get(selectedDate)?.data.slice(11, 16)}
-            </h6>
-            <h6>
-              <strong>Durată:</strong> {eventsMap.get(selectedDate)?.durata}{" "}
-              minute
-            </h6>
+        <div className={`${styles.eventCard}`}>
+          <div className={`${styles.cardContent} ${styles[fadeClass]}`}>
+            <h2>{eventsMap.get(selectedDate)?.titlu}</h2>
+            <br></br>
+            <p>{eventsMap.get(selectedDate)?.descriere}</p>
+            <div>
+              <h6>
+                <strong>Data:</strong> {format(selectedDate, "dd.MM.yyyy")}
+              </h6>
+              <h6>
+                <strong>Ora:</strong>{" "}
+                {eventsMap.get(selectedDate)?.data.slice(11, 16)}
+              </h6>
+              <h6>
+                <strong>Durată:</strong> {eventsMap.get(selectedDate)?.durata}{" "}
+                minute
+              </h6>
+            </div>
+            <Link to={`/tickets/${eventsMap.get(selectedDate)?.id}`}>
+              <Button>Cumpără bilete</Button>
+            </Link>
           </div>
-          <Link to={`/tickets/${eventsMap.get(selectedDate)?.id}`}>
-            <Button>Cumpără bilete</Button>
-          </Link>
         </div>
       </div>
     </div>

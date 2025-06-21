@@ -6,7 +6,6 @@ const router = express.Router();
 const { findEventById } = require("../controllers/eventService");
 const { generateTicketPDF } = require("../utils/generateTicket");
 
-// Configurare transport nodemailer
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -34,7 +33,7 @@ router.post("/checkout", async (req, res) => {
           ticket.categorie.charAt(0).toUpperCase() + ticket.categorie.slice(1)
         } - ${
           ticket.rand[0] === "R"
-            ? `Randul ${ticket.rand.slice(1)}`
+            ? `Rândul ${ticket.rand.slice(1)}`
             : `Loja ${ticket.rand.slice(4)}`
         }, Locul ${ticket.scaun}`,
       },

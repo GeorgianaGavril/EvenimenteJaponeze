@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
 
 .calendar {
-  background-color: #763932;
+  background-color: #4f0a01;
   color: #e4ceba;
   font-family: "Poppins", sans-serif;
   border-radius: 12px;
@@ -13,7 +13,7 @@
 }
 
 .calendar .react-datepicker__header {
-  background-color: #763932;
+  background-color: #4f0a01;
   border-bottom: none;
 }
 
@@ -52,7 +52,7 @@
 
 .calendar
   .react-datepicker__day--selected:not(.react-datepicker__day--outside-month) {
-  background-color: #763932 !important;
+  background-color: #4f0a01 !important;
   color: #e4ceba !important;
   font-weight: 600;
   border-radius: 50%;

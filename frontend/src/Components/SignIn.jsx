@@ -3,10 +3,13 @@ import styles from "../css/pages/login.module.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn({ toggle }) {
   const [email, setEmail] = useState("");
   const [parola, setParola] = useState("");
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,6 +23,15 @@ export default function SignIn({ toggle }) {
       toast.success("Autentificare reușită!");
       setEmail("");
       setParola("");
+
+      const decoded = JSON.parse(atob(res.data.token.split(".")[1]));
+      if (decoded.tip === "admin") {
+        // Redirect la panou admin
+        navigate("/admin/dashboard");
+      } else {
+        // Redirect la home sau zona user
+        navigate("/");
+      }
     } catch (err) {
       console.error(err);
       toast.error("Credențialele sunt incorecte!");

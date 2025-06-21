@@ -56,10 +56,20 @@ const UserModel = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "userObisnuit",
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: "createdAt",
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: "updatedAt",
+      },
     },
     {
       freezeTableName: true,
-      timestamps: false,
+      timestamps: true,
     }
   );
   return User;

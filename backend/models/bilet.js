@@ -6,10 +6,20 @@ const BiletModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: "createdAt",
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: "updatedAt",
+      },
     },
     {
       freezeTableName: true,
-      timestamps: false,
+      timestamps: true,
     }
   );
   return Bilet;
