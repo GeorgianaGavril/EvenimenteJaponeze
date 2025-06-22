@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Mail, Lock } from "lucide-react";
 
 export default function SignIn({ toggle }) {
   const [email, setEmail] = useState("");
@@ -26,10 +27,8 @@ export default function SignIn({ toggle }) {
 
       const decoded = JSON.parse(atob(res.data.token.split(".")[1]));
       if (decoded.tip === "admin") {
-        // Redirect la panou admin
         navigate("/admin/dashboard");
       } else {
-        // Redirect la home sau zona user
         navigate("/");
       }
     } catch (err) {
@@ -44,18 +43,25 @@ export default function SignIn({ toggle }) {
         <div className={styles.left}>
           <h3>Autentificare</h3>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Parolă"
-              value={parola}
-              onChange={(e) => setParola(e.target.value)}
-            />
+            <div className={styles["input-wrapper"]}>
+              <Mail className={styles["icon"]} />
+              <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className={styles["input-wrapper"]}>
+              <Lock className={styles["icon"]} />
+              <input
+                type="password"
+                placeholder="Parolă"
+                value={parola}
+                onChange={(e) => setParola(e.target.value)}
+              />
+            </div>
             <button type="submit">Conectează-te</button>
           </form>
         </div>

@@ -8,6 +8,7 @@ import {
   Radar,
   ResponsiveContainer,
   Tooltip,
+  Legend,
 } from "recharts";
 import CardWrapper from "./CardWrapper";
 
@@ -37,6 +38,11 @@ function CategoryRateChart() {
               fillOpacity={0.6}
             />
             <Tooltip />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              formatter={() => "Procent ocupare (%)"}
+            />
           </RadarChart>
         </ResponsiveContainer>
       </div>

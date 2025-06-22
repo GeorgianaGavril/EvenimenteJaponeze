@@ -9,18 +9,32 @@ import TicketsPerMonthChart from "../Components/TicketsPerMonthChart";
 import CategoryRateChart from "../Components/CategoryRateChart";
 import { Container, Row, Col } from "react-bootstrap";
 
-function Dashboard() {
+function Statistics() {
   return (
     <div style={{ backgroundColor: "#fffbf1", minHeight: "100vh" }}>
       <Navbar />
 
       <Container style={{ maxWidth: "1300px", padding: "40px 20px" }}>
         <h2
-          className="text-center fw-bold mb-5"
-          style={{ color: "#4f0a01", fontFamily: "Domine, serif" }}
+          className="text-center fw-bold"
+          style={{
+            color: "#4f0a01",
+            fontFamily: "Domine, serif",
+            marginBottom: "20px",
+          }}
         >
           Panou de administrare
         </h2>
+        <div
+          className="mb-5"
+          style={{
+            height: "5px",
+            width: "150px",
+            backgroundColor: "#4f0a01",
+            margin: "0 auto",
+            borderRadius: "10px",
+          }}
+        ></div>
 
         {/* 🟨 Rând KPI-uri + TicketsPerHourChart */}
         <Row className="gy-4 gx-4 mb-5">
@@ -59,4 +73,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Statistics;

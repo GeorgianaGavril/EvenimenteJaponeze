@@ -43,9 +43,9 @@ const controller = {
       }
 
       await BiletDb.bulkCreate(bilete, {
-        validate: true, // opțional, dar bun pentru siguranță
-        ignoreDuplicates: false, // doar dacă vrei
-        individualHooks: true, // IMPORTANT dacă ai hooks; altfel poate lipsi
+        // validate: true, // opțional, dar bun pentru siguranță
+        // ignoreDuplicates: false, // doar dacă vrei
+        // individualHooks: true, // IMPORTANT dacă ai hooks; altfel poate lipsi
       });
 
       res.status(201).send({ message: "Bilete introduse cu succes!" });

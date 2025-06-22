@@ -11,6 +11,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  Legend,
 } from "recharts";
 import CardWrapper from "./CardWrapper";
 
@@ -29,19 +30,46 @@ function TicketsPerMonthChart() {
   }, []);
 
   return (
-    <CardWrapper title="Bilete vândute pe lună">
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+    <CardWrapper title="Bilete vândute pentru evenimentele din fiecare lună">
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Bar Chart */}
         <div style={{ flex: 1, minWidth: 200, height: 250 }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="luna" />
-              <YAxis allowDecimals={false} />
+              <XAxis
+                dataKey="luna"
+                label={{
+                  value: "Luna evenimentului",
+                  position: "insideBottom",
+                  offset: -5,
+                  style: { fill: "#999", fontSize: 12 },
+                }}
+              />
+              <YAxis
+                allowDecimals={false}
+                label={{
+                  value: "Bilete vândute",
+                  angle: -90,
+                  position: "insideLeft",
+                  offset: 10,
+                  style: { fill: "#999", fontSize: 12 },
+                }}
+              />
               <Tooltip />
               <Bar dataKey="total" fill="#763932" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
+
+        {/* Pie Chart */}
         <div style={{ flex: 1, minWidth: 200, height: 250 }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -61,6 +89,11 @@ function TicketsPerMonthChart() {
                 ))}
               </Pie>
               <Tooltip />
+              <Legend
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>

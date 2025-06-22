@@ -15,7 +15,6 @@ function SeatMap({
     if (!svg) return;
 
     requestAnimationFrame(() => {
-      // Preluăm toate grupurile de locuri (excludem primul <g>)
       const groups = Array.from(svg.querySelectorAll("g[id]")).slice(1);
 
       groups.forEach((g) => {
@@ -23,18 +22,15 @@ function SeatMap({
         const circle = g.querySelector("circle");
         const textPath = g.querySelector("path");
 
-        // Clasa de bază pentru scaun
         g.classList.add(styles.seat);
         circle?.classList.add(styles["seat-circle"]);
         textPath?.classList.add(styles.text);
 
-        // Dacă scaunul e rezervat
         if (locuriCumparate.includes(id)) {
           g.classList.add(styles.reserved);
           return;
         }
 
-        // Clasificăm pe categorii
         const prefix = id.split("_")[0];
         if (/^R?[1-5]$/.test(prefix)) {
           circle?.classList.add(styles.vip);
@@ -44,14 +40,12 @@ function SeatMap({
           circle?.classList.add(styles.balcon);
         }
 
-        // Adăugăm clasa 'selected' dacă e selectat
         if (selectedSeats.includes(id)) {
           g.classList.add(styles.selected);
         } else {
           g.classList.remove(styles.selected);
         }
 
-        // Click handler
         g.onclick = () => {
           const esteSelectat = selectedSeats.includes(id);
           const newSelection = esteSelectat

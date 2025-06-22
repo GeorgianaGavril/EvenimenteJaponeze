@@ -3,6 +3,7 @@ import styles from "../css/pages/login.module.css";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { User, Mail, Lock, ShieldCheck } from "lucide-react";
 
 export default function SignUp({ toggle }) {
   const [nume, setNume] = useState("");
@@ -80,53 +81,72 @@ export default function SignUp({ toggle }) {
           <h3>Creare cont</h3>
           <form onSubmit={handleSubmit}>
             <div className={styles["form-group"]}>
-              <input
-                type="text"
-                name="nume"
-                placeholder="Nume"
-                value={nume}
-                onChange={(e) => setNume(e.target.value)}
-              />
+              <div className={styles["input-wrapper"]}>
+                <User className={styles["icon"]} />
+                <input
+                  type="text"
+                  name="nume"
+                  placeholder="Nume"
+                  value={nume}
+                  onChange={(e) => setNume(e.target.value)}
+                />
+              </div>
               {erori.nume && <small>{erori.nume}</small>}
             </div>
+
             <div className={styles["form-group"]}>
-              <input
-                type="text"
-                name="prenume"
-                placeholder="Prenume"
-                value={prenume}
-                onChange={(e) => setPrenume(e.target.value)}
-              />
+              <div className={styles["input-wrapper"]}>
+                <User className={styles["icon"]} />
+                <input
+                  type="text"
+                  name="prenume"
+                  placeholder="Prenume"
+                  value={prenume}
+                  onChange={(e) => setPrenume(e.target.value)}
+                />
+              </div>
               {erori.prenume && <small>{erori.prenume}</small>}
             </div>
+
             <div className={styles["form-group"]}>
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <div className={styles["input-wrapper"]}>
+                <Mail className={styles["icon"]} />
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
               {erori.email && <small>{erori.email}</small>}
             </div>
+
             <div className={styles["form-group"]}>
-              <input
-                type="password"
-                name="parola"
-                placeholder="Parolă"
-                value={parola}
-                onChange={(e) => setParola(e.target.value)}
-              />
+              <div className={styles["input-wrapper"]}>
+                <Lock className={styles["icon"]} />
+                <input
+                  type="password"
+                  name="parola"
+                  placeholder="Parolă"
+                  value={parola}
+                  onChange={(e) => setParola(e.target.value)}
+                />
+              </div>
               {erori.parola && <small>{erori.parola}</small>}
             </div>
+
             <div className={styles["form-group"]}>
-              <input
-                type="password"
-                name="confirmaParola"
-                placeholder="Confirmă parola"
-                value={confirmaParola}
-                onChange={(e) => setConfirmaParola(e.target.value)}
-              />
+              <div className={styles["input-wrapper"]}>
+                <ShieldCheck className={styles["icon"]} />
+                <input
+                  type="password"
+                  name="confirmaParola"
+                  placeholder="Confirmă parola"
+                  value={confirmaParola}
+                  onChange={(e) => setConfirmaParola(e.target.value)}
+                />
+              </div>
               {erori.confirmaParola && <small>{erori.confirmaParola}</small>}
             </div>
             <button type="submit">Înscrie-te</button>

@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "../css/components/navbar.module.css";
-import sakuraStage from "../assets/images/Sakura Stage (2).png";
+import sakuraStage from "../assets/images/Sakura Stage (3).png";
+import Login from "../Pages/Login";
+import { useState } from "react";
 
 function Navbar() {
+  const [showLogin, setShowLogin] = useState(false);
+
   const token = localStorage.getItem("token");
   let isAdmin = false;
 
@@ -27,19 +31,33 @@ function Navbar() {
             <Link to="/calendar">
               <button>Calendar</button>
             </Link>
-            <Link to="/account">
-              <button>Cont</button>
-            </Link>
+            <>
+              <button onClick={() => setShowLogin(true)}>Autentificare</button>
+              <Login show={showLogin} onClose={() => setShowLogin(false)} />
+            </>
           </div>
         )}
 
         {isAdmin && (
-          <Link to="/admin">
-            <button>Admin</button>
-          </Link>
+          <div>
+            <Link to="/dashboard">
+              <button>Dashboard</button>
+            </Link>
+            <Link to="/statistics">
+              <button>Statistici</button>
+            </Link>
+            <button
+              onClick={() => {
+                localStorage.removeItem("token");
+                window.location.href = "/";
+              }}
+            >
+              Logout
+            </button>
+          </div>
         )}
 
-        {token && (
+        {/* {token && (
           <button
             onClick={() => {
               localStorage.removeItem("token");
@@ -48,7 +66,7 @@ function Navbar() {
           >
             Logout
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

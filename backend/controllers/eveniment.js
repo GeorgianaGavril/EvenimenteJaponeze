@@ -17,15 +17,8 @@ const controller = {
 
   createEvent: async (req, res) => {
     try {
-      const sala = await SalaDb.findByPk(req.params.salaId);
-
-      if (!sala) {
-        return res.status(404).send({ message: "Nu exista sala cu acest ID!" });
-      }
-
       const event = await EvenimentDb.create({
         ...req.body,
-        salaId: req.params.salaId,
       });
       res.status(201).json(event);
     } catch (err) {

@@ -363,11 +363,10 @@ function Tickets() {
     }
 
     try {
-      // 1. Inițiem checkout-ul Stripe (prima dată!)
       const {
         data: { url, sessionId },
       } = await axios.post("http://localhost:3004/api/stripe/checkout", {
-        email: "georgianagavril401@gmail.com",
+        email: "ionpopescu@gmail.com",
         eventId: event.id,
         bilete,
         pretVIP: event.pretVIP,
@@ -375,7 +374,6 @@ function Tickets() {
         pretLoja: event.pretLoja,
       });
 
-      // 2. Construim biletele finale și le salvăm în DB cu sessionId ca reservationId
       const bileteFinale = bilete.map((loc) => ({
         reservationId: sessionId,
         locId: loc.id,
@@ -436,10 +434,7 @@ function Tickets() {
             .filter((artist) => artist.evenimentId === event.id)
             .map((artist) => (
               <li key={artist.id}>
-                <strong>
-                  {artist.nume} {artist.prenume}:
-                </strong>{" "}
-                {artist.rol}
+                <strong>{artist.rol}:</strong> {artist.nume} {artist.prenume}
               </li>
             ))}
         </ul>
@@ -598,7 +593,7 @@ function Tickets() {
           </Button>
         </div>
       )}
-      <Button onClick={creareLocuri}> Creare</Button>
+      {/* <Button onClick={creareLocuri}> Creare</Button> */}
     </div>
   );
 }

@@ -1,0 +1,129 @@
+.event-form {
+  background: linear-gradient(145deg, #fff0f6, #fceae0);
+  padding: 2rem;
+  border-radius: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  border: 1px solid #deb8c2;
+  box-shadow: 0 12px 20px rgba(120, 30, 50, 0.08);
+  font-family: "Georgia", serif;
+  font-size: 0.92rem;
+  color: #4f0a01;
+  animation: fadeIn 0.5s ease;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.8rem;
+  color: #4f0a01;
+  font-weight: bold;
+}
+
+.form-title::before {
+  content: "✿";
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #d8a4ba;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: #763932;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.45rem 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid #deb8c2;
+  background-color: #fffdfb;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #c77ca5;
+  box-shadow: 0 0 0 2px rgba(219, 184, 210, 0.4);
+}
+
+.form-group small {
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  color: #7a5656;
+}
+
+.submit-btn {
+  background-color: #c77ca5;
+  color: #fffaf6;
+  padding: 0.6rem 1.6rem;
+  border: none;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(199, 124, 165, 0.2);
+}
+
+.submit-btn:hover {
+  background-color: #b86795;
+  transform: translateY(-2px);
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #763932;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.input-wrapper input,
+.input-wrapper select,
+.input-wrapper textarea {
+  width: 100%;
+  padding: 10px 12px 10px 42px;
+  border: 1px solid #dbb8d2;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #fffdfb;
+  color: #4f0a01;
+}
+
+.input-wrapper select {
+  appearance: none;
+}
