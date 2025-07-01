@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import SeatMap from "../Components/SeatMap";
 import styles from "../css/pages/tickets.module.css";
@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 
 function Tickets() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
   const [artisti, setArtisti] = useState([]);
@@ -109,39 +110,6 @@ function Tickets() {
       setEvent(res.data);
     } catch (err) {
       console.error("Eroare la returnarea evenimentului: ", err);
-    }
-  }
-
-  async function creareLocuri() {
-    const svg = document.getElementById("Sala1");
-    const groups = Array.from(svg.querySelectorAll("g[id]")).slice(1);
-
-    const locuri = [];
-
-    groups.forEach((g) => {
-      let categorie;
-      if (g.id.split("_")[0][0] === "L") {
-        categorie = "Loja";
-      } else if (Number(g.id.split("_")[0].slice(1)) > 5) {
-        categorie = "Standard";
-      } else {
-        categorie = "VIP";
-      }
-
-      const [rand, scaun] = g.id.split("_");
-
-      locuri.push({
-        scaun: parseInt(scaun),
-        rand,
-        categorie,
-        salaId: 1,
-      });
-    });
-
-    try {
-      await axios.post("http://localhost:3004/api/loc/all", locuri);
-    } catch (err) {
-      console.error("Eroare la bulk create locuri: ", err);
     }
   }
 
@@ -360,6 +328,25 @@ function Tickets() {
       bilete = [...vip, ...loja, ...standard];
     } else {
       bilete = alocaManual(locuriDisponibile);
+    }
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      localStorage.setItem("redirectToStripe", "true");
+      localStorage.setItem(
+        "pendingBilete",
+        JSON.stringify({
+          eventId: event.id,
+          lista: bilete,
+          pretVIP: event.pretVIP,
+          pretStandard: event.pretStandard,
+          pretLoja: event.pretLoja,
+        })
+      );
+
+      navigate(`${window.location.pathname}?login=true`);
+      return;
     }
 
     try {
@@ -593,7 +580,6 @@ function Tickets() {
           </Button>
         </div>
       )}
-      {/* <Button onClick={creareLocuri}> Creare</Button> */}
     </div>
   );
 }

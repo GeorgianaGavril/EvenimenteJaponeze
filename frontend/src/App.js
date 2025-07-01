@@ -5,6 +5,8 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Statistics from "./Pages/Statistics";
 import AddEvent from "./Pages/AddEvent";
+import Dashboard from "./Pages/Dashboard";
+import ModifyEvent from "./Pages/ModifyEvent";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/account" element={<Login />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/addEvent" element={<AddEvent />} />
+          <Route path="/admin/modifyEvent/:id" element={<ModifyEvent />} />
         </Routes>
       </BrowserRouter>
     </div>

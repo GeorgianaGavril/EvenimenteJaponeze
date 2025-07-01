@@ -5,6 +5,7 @@ const {
 } = require("../utils/errorsManager");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
+const { generateToken } = require("../middlewares/auth");
 
 const controller = {
   getAllUsers: async (req, res) => {
@@ -33,7 +34,10 @@ const controller = {
         parola: await bcrypt.hash(parola, 10),
         tip,
       });
-      res.status(201).json(user);
+
+      const token = generateToken(user);
+
+      res.status(201).json({ message: "Cont creat cu succes", token });
     } catch (err) {
       functieEroare(err, "Eroare la crearea utilizatorului!", res);
     }

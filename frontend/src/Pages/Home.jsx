@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Navbar from "../Components/Navbar";
@@ -7,8 +6,38 @@ import sakuraImg from "../assets/images/Sakura branch cream.png";
 import cardImg1 from "../assets/images/213.jpg";
 import cardImg2 from "../assets/images/43078.jpg";
 import cardImg3 from "../assets/images/7032.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getAllEvents();
+  }, []);
+
+  const getAllEvents = async () => {
+    try {
+      const res = await axios.get("http://localhost:3004/api/event");
+      const spectacoleViitoare = res.data
+        .filter((ev) => new Date(ev.data) > new Date())
+        .sort((a, b) => new Date(a.data) - new Date(b.data))
+        .slice(0, 3);
+      setEvents(spectacoleViitoare);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  function scurteazaText(text, maxLength = 100) {
+    if (text) {
+      if (text.length <= maxLength) return text;
+      return text.slice(0, text.lastIndexOf(" ", maxLength)) + "...";
+    }
+  }
+
   return (
     <div className={styles["page-wrapper"]}>
       <Navbar />
@@ -27,7 +56,9 @@ function Home() {
           </h1>
 
           <h3>Descoperă spectacolele tradiționale japoneze</h3>
-          <Button variant="primary">Vezi evenimentele</Button>
+          <Button variant="primary" onClick={() => navigate("/calendar")}>
+            Vezi evenimentele
+          </Button>
         </div>
 
         <div className={`col-md-6 text-center ${styles["sakura-pic"]}`}>
@@ -43,46 +74,34 @@ function Home() {
 
       <section className={styles["showcase-section"]}>
         <div className={styles["section-header"]}>
-          <h2>Spectacole</h2>
+          <h2>Spectacole viitoare</h2>
           <div className={styles.divider}></div>
         </div>
 
         <div className={styles["card-container"]}>
-          <Card className={styles["show-cards"]}>
-            <Card.Img variant="top" src={cardImg1} />
-            <Card.Body>
-              <Card.Title>Koto</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Citește</Button>
-            </Card.Body>
-          </Card>
-
-          <Card className={`${styles["show-cards"]} ${styles.card2}`}>
-            <Card.Img variant="top" src={cardImg2} />
-            <Card.Body>
-              <Card.Title>Kabuki</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Citește</Button>
-            </Card.Body>
-          </Card>
-
-          <Card className={styles["show-cards"]}>
-            <Card.Img variant="top" src={cardImg3} />
-            <Card.Body>
-              <Card.Title>Noh</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Citește</Button>
-            </Card.Body>
-          </Card>
+          {events.slice(0, 3).map((ev, idx) => (
+            <Card
+              key={ev.id}
+              className={`${styles["show-cards"]} ${
+                idx === 1 ? styles.card2 : ""
+              }`}
+            >
+              <Card.Img
+                variant="top"
+                src={[cardImg1, cardImg2, cardImg3][idx]}
+              />
+              <Card.Body>
+                <Card.Title>{ev.titlu}</Card.Title>
+                <Card.Text>{scurteazaText(ev.descriere)}</Card.Text>
+                <Button
+                  variant="primary"
+                  onClick={() => navigate(`/tickets/${ev.id}`)}
+                >
+                  Citește
+                </Button>
+              </Card.Body>
+            </Card>
+          ))}
         </div>
       </section>
 

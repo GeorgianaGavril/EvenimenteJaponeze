@@ -3,9 +3,15 @@ const jwt = require("jsonwebtoken");
 
 const controller = {
   generateToken: (user) => {
-    return jwt.sign({ tip: user.tip }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    return jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        tip: user.tip,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
   },
 
   verifyToken: async (req, res, next) => {
@@ -18,7 +24,7 @@ const controller = {
       if (err) {
         return res.status(403).send({ message: "Token invalid!" });
       }
-      res.user = decoded;
+      req.user = decoded;
       next();
     });
   },

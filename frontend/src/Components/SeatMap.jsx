@@ -4,9 +4,9 @@ import axios from "axios";
 
 function SeatMap({
   locuriCumparate = [],
-  selectedSeats,
-  setSelectedSeats,
-  calculeazaTotal,
+  selectedSeats = [],
+  setSelectedSeats = () => {},
+  calculeazaTotal = () => {},
 }) {
   const svgRef = useRef(null);
 
@@ -26,7 +26,7 @@ function SeatMap({
         circle?.classList.add(styles["seat-circle"]);
         textPath?.classList.add(styles.text);
 
-        if (locuriCumparate.includes(id)) {
+        if (Array.isArray(locuriCumparate) && locuriCumparate.includes(id)) {
           g.classList.add(styles.reserved);
           return;
         }
@@ -40,21 +40,24 @@ function SeatMap({
           circle?.classList.add(styles.balcon);
         }
 
-        if (selectedSeats.includes(id)) {
-          g.classList.add(styles.selected);
-        } else {
-          g.classList.remove(styles.selected);
+        // Doar dacă `selectedSeats` a fost transmis
+        if (Array.isArray(selectedSeats)) {
+          if (selectedSeats.includes(id)) {
+            g.classList.add(styles.selected);
+          } else {
+            g.classList.remove(styles.selected);
+          }
+
+          g.onclick = () => {
+            const esteSelectat = selectedSeats.includes(id);
+            const newSelection = esteSelectat
+              ? selectedSeats.filter((s) => s !== id)
+              : [...selectedSeats, id];
+
+            setSelectedSeats(newSelection);
+            calculeazaTotal(newSelection);
+          };
         }
-
-        g.onclick = () => {
-          const esteSelectat = selectedSeats.includes(id);
-          const newSelection = esteSelectat
-            ? selectedSeats.filter((s) => s !== id)
-            : [...selectedSeats, id];
-
-          setSelectedSeats(newSelection);
-          calculeazaTotal(newSelection);
-        };
       });
     });
   }, [selectedSeats, locuriCumparate]);

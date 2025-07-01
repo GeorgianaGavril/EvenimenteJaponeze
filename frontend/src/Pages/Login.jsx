@@ -14,7 +14,7 @@ export default function Login({ show, onClose }) {
         {signUp ? (
           <SignUp toggle={() => setSignUp(false)} />
         ) : (
-          <SignIn toggle={() => setSignUp(true)} />
+          <SignIn toggle={() => setSignUp(true)} onClose={onClose} />
         )}
         <button className={styles.close} onClick={onClose}>
           ✕

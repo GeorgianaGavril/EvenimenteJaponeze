@@ -1,12 +1,16 @@
-import AdminAddEventForm from "../Components/Form";
+import Form from "../Components/Form";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
 
 export default function AddEvent() {
   const handleAddEvent = async (data) => {
     try {
-      await axios.post("http://localhost:3004/api/event/", data);
-      alert("Eveniment adăugat cu succes!");
+      await axios.post("http://localhost:3004/api/event/", data, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("Eveniment adaugat cu succes!");
     } catch (err) {
       alert("Eroare la adăugare: " + err.message);
     }
@@ -15,7 +19,7 @@ export default function AddEvent() {
   return (
     <>
       <Navbar />
-      <AdminAddEventForm onSubmit={handleAddEvent} />
+      <Form onSubmit={handleAddEvent} />
     </>
   );
 }

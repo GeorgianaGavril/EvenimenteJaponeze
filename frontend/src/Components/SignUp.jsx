@@ -52,7 +52,21 @@ export default function SignUp({ toggle }) {
           confirmaParola,
           tip: "userObisnuit",
         });
-        localStorage.setItem("token", res.data.token);
+        const token = res.data.token;
+        if (!token) {
+          toast.error("Token inexistent!");
+          return;
+        }
+
+        localStorage.setItem("token", token);
+
+        const base64 = token
+          .split(".")[1]
+          .replace(/-/g, "+")
+          .replace(/_/g, "/");
+        const decoded = JSON.parse(atob(base64));
+        localStorage.setItem("user", JSON.stringify(decoded));
+
         toast.success("Cont realizat cu succes!");
         setNume("");
         setPrenume("");

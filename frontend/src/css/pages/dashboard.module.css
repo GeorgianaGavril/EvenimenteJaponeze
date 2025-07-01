@@ -1,0 +1,156 @@
+.wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: "Georgia", serif;
+  color: #4f0a01;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header h2 {
+  font-size: 28px;
+  color: #4f0a01;
+}
+
+.addBtn {
+  background-color: #dbb8d2;
+  color: #4f0a01;
+  padding: 10px 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 15px;
+}
+
+.addBtn:hover {
+  background-color: #c79dbd;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: linear-gradient(135deg, #fef1f5, #fceeea);
+  border: 1px solid #dbb8d2;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(79, 10, 1, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #4f0a01;
+}
+
+.card p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.edit {
+  background-color: #ffe9f1;
+  color: #763932;
+}
+
+.edit:hover {
+  background-color: #fdd1e3;
+}
+
+.delete {
+  background-color: #ffe1e1;
+  color: #912323;
+}
+
+.delete:hover {
+  background-color: #f5b6b6;
+}
+
+.actionsHeader {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 8px 14px;
+  border: 1px solid #dbb8d2;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #fffdfb;
+  color: #4f0a01;
+  min-width: 220px;
+}
+
+.sortSelect {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #dbb8d2;
+  background-color: #fffdfb;
+  font-size: 14px;
+  color: #4f0a01;
+}
+
+.separator {
+  margin: 3rem 0 2rem;
+  border-top: 2px solid #e0e0e0;
+}
+
+.saliGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.generateBtn {
+  background-color: #8c4b7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.generateBtn:hover {
+  background-color: #6f3b66;
+}

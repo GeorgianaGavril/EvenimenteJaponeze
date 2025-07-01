@@ -8,8 +8,10 @@ const controller = {
       return res.status(401).send({ message: "Acces neautorizat" });
     }
 
+    console.log(token);
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
       if (err) {
+        console.log(err);
         return res.status(403).send({ message: "Token invalid!" });
       }
 

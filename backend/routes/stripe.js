@@ -46,7 +46,7 @@ router.post("/checkout", async (req, res) => {
     line_items,
     mode: "payment",
     success_url: "http://localhost:3000/",
-    cancel_url: "http://localhost:3000/cancel",
+    cancel_url: "http://localhost:3000/",
     customer_email: data.email,
     metadata: {
       bilete: JSON.stringify(data.bilete),
@@ -168,6 +168,5 @@ const webhookHandler = async (req, res) => {
   res.status(200).json({ received: true });
 };
 
-// exportăm handlerul separat pt server.js
 module.exports = router;
 module.exports.__webhook = webhookHandler;
