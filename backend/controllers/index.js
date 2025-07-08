@@ -5,6 +5,7 @@ const locController = require("./loc");
 const salaController = require("./sala");
 const biletController = require("./bilet");
 const artistController = require("./artist");
+const artistEvenimentController = require("./artistEveniment");
 const eventServiceController = require("./eveniment");
 
 const controllers = {
@@ -15,6 +16,7 @@ const controllers = {
   salaController,
   biletController,
   artistController,
+  artistEvenimentController,
   eventServiceController,
 };
 

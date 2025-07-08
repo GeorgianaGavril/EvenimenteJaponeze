@@ -127,3 +127,88 @@
 .input-wrapper select {
   appearance: none;
 }
+
+.artist-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.add-artist {
+  background-color: #dbb8d2;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.remove-artist {
+  background: none;
+  border: none;
+  color: #912323;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.artist-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.add-artist {
+  background-color: #dbb8d2;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.remove-artist {
+  background: none;
+  border: none;
+  color: #912323;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .event-form {
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem 10px;
+    font-size: 0.88rem;
+  }
+
+  .form-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.88rem;
+    padding: 0.4rem 0.9rem 0.4rem 2.5rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.7rem;
+  }
+
+  .input-wrapper .icon {
+    left: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-group small {
+    font-size: 0.7rem;
+  }
+}

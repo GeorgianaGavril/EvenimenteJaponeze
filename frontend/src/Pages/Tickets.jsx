@@ -115,7 +115,9 @@ function Tickets() {
 
   async function getAllArtisti() {
     try {
-      const res = await axios.get(`http://localhost:3004/api/artist/${id}`);
+      const res = await axios.get(
+        `http://localhost:3004/api/artistEveniment/event/${id}`
+      );
       setArtisti(res.data);
     } catch (err) {
       console.error("Eroare la returnarea artistilor: ", err);
@@ -417,13 +419,12 @@ function Tickets() {
       <section className={`${styles["event-section"]} ${styles["light-bg"]}`}>
         <h2>Distribuție</h2>
         <ul>
-          {artisti
-            .filter((artist) => artist.evenimentId === event.id)
-            .map((artist) => (
-              <li key={artist.id}>
-                <strong>{artist.rol}:</strong> {artist.nume} {artist.prenume}
-              </li>
-            ))}
+          {artisti.map((entry) => (
+            <li key={entry.id}>
+              <strong>{entry.rol}:</strong> {entry.Artist?.nume}{" "}
+              {entry.Artist?.prenume}
+            </li>
+          ))}
         </ul>
       </section>
 

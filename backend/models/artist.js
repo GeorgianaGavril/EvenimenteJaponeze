@@ -1,5 +1,5 @@
 const ArtistModel = (sequelize, DataTypes) => {
-  const Eveniment = sequelize.define(
+  const Artist = sequelize.define(
     "Artist",
     {
       nume: {
@@ -32,17 +32,13 @@ const ArtistModel = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      rol: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
       freezeTableName: true,
       timestamps: false,
     }
   );
-  return Eveniment;
+  return Artist;
 };
 
 module.exports = ArtistModel;

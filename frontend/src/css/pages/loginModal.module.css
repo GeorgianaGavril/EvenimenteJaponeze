@@ -18,8 +18,11 @@
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
   max-width: 850px;
   width: 90%;
-  animation: scaleIn 0.4s ease;
   position: relative;
+}
+
+.animated {
+  animation: scaleIn 0.4s ease;
 }
 
 @keyframes scaleIn {
@@ -42,4 +45,14 @@
   font-size: 24px;
   color: #763932;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    padding: 10px;
+    max-width: 95%;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }

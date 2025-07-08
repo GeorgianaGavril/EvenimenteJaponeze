@@ -42,7 +42,6 @@ const controller = {
     try {
       const artist = await ArtistDb.create({
         ...req.body,
-        evenimentId: req.params.evenimentId,
       });
       res.status(201).json(artist);
     } catch (err) {

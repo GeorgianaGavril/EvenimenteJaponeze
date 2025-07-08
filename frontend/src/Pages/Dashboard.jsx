@@ -4,8 +4,9 @@ import axios from "axios";
 import styles from "../css/pages/dashboard.module.css";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import Navbar from "../Components/Navbar";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import SeatMap from "../Components/SeatMap";
+import AddArtistForm from "../Components/ArtistForm";
 
 export default function Dashboard() {
   const [evenimente, setEvenimente] = useState([]);
@@ -45,8 +46,13 @@ export default function Dashboard() {
     if (!window.confirm("Ești sigur că vrei să ștergi acest eveniment?"))
       return;
     try {
-      await axios.delete(`http://localhost:3004/api/event/${id}`);
+      await axios.delete(`http://localhost:3004/api/event/${id}`, {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      });
       fetchEvenimente();
+      toast.success("Eveniment eliminat!");
     } catch (err) {
       console.error("Eroare la ștergere", err);
     }
@@ -159,6 +165,9 @@ export default function Dashboard() {
 
         <div className={styles.separator}></div>
 
+        <AddArtistForm onArtistAdded={fetchEvenimente} />
+
+        <div className={styles.separator}></div>
         <div className={styles.header}>
           <h2>Gestionare Săli</h2>
         </div>
@@ -181,6 +190,7 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

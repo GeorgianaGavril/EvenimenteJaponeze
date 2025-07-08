@@ -10,7 +10,6 @@ import {
   Ticket,
   Tag,
   Building2,
-  Users,
 } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -89,11 +88,24 @@ const Form = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleArtistiChange = (e) => {
-    const selected = Array.from(e.target.selectedOptions).map(
-      (opt) => opt.value
-    );
-    setFormData((prev) => ({ ...prev, artisti: selected }));
+  const addArtist = () => {
+    setFormData((prev) => ({
+      ...prev,
+      artisti: [...prev.artisti, { idArtist: "", rol: "" }],
+    }));
+  };
+
+  const removeArtist = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      artisti: prev.artisti.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleArtistChange = (index, field, value) => {
+    const updated = [...formData.artisti];
+    updated[index][field] = value;
+    setFormData((prev) => ({ ...prev, artisti: updated }));
   };
 
   const handleSubmit = (e) => {
@@ -140,8 +152,28 @@ const Form = ({
       return;
     }
 
+    const artistiFormatati = formData.artisti
+      .filter((a) => a.idArtist && a.rol)
+      .map((a) => ({ id: parseInt(a.idArtist), rol: a.rol }));
+
+    const payload = {
+      ...formData,
+      artisti: artistiFormatati,
+    };
+
+    setFormData({
+      titlu: "",
+      data: "",
+      durata: "",
+      descriere: "",
+      pretVIP: "",
+      pretLoja: "",
+      pretStandard: "",
+      salaId: "",
+      artisti: [],
+    });
     toast.success(isEdit ? "Modificare în curs..." : "Adăugare în curs...");
-    onSubmit(formData);
+    onSubmit(payload);
   };
 
   return (
@@ -270,25 +302,49 @@ const Form = ({
         </div>
 
         <div className={styles["form-group"]}>
-          <label htmlFor="artisti">Artiști</label>
-          <div className={styles["input-wrapper"]}>
-            <Users className={styles.icon} />
-            <select
-              name="artisti"
-              multiple
-              value={formData.artisti}
-              onChange={handleArtistiChange}
-            >
-              {artisti.map((artist) => (
-                <option key={artist.id} value={artist.id}>
-                  {artist.nume} {artist.prenume}
-                </option>
-              ))}
-            </select>
-          </div>
-          <small>
-            Ține Ctrl (Windows) / Cmd (Mac) pentru selecție multiplă
-          </small>
+          <label>Artiști și roluri</label>
+          {formData.artisti.map((item, index) => (
+            <div key={index} className={styles["artist-row"]}>
+              <select
+                value={item.idArtist}
+                onChange={(e) =>
+                  handleArtistChange(index, "idArtist", e.target.value)
+                }
+              >
+                <option value="">Selectează artist</option>
+                {artisti.map((artist) => (
+                  <option key={artist.id} value={artist.id}>
+                    {artist.nume} {artist.prenume}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="text"
+                placeholder="Rol"
+                value={item.rol}
+                onChange={(e) =>
+                  handleArtistChange(index, "rol", e.target.value)
+                }
+              />
+
+              <button
+                type="button"
+                onClick={() => removeArtist(index)}
+                className={styles["remove-artist"]}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={addArtist}
+            className={styles["add-artist"]}
+          >
+            + Adaugă artist
+          </button>
         </div>
 
         <button type="submit" className={styles["submit-btn"]}>

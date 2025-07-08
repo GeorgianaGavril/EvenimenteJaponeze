@@ -9,7 +9,7 @@ const controller = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).send({ message: "Eroare la resetara bazei de date!" });
+        res.status(500).send({ message: "Eroare la resetarea bazei de date!" });
       });
   },
 };

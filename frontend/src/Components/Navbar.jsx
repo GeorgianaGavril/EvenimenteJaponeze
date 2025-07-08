@@ -9,6 +9,7 @@ function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -55,12 +56,23 @@ function Navbar() {
 
   return (
     <div className={styles.navbar}>
-      <div>
+      <div className={styles.left}>
         <img src={sakuraStage} width={150} alt="Logo" />
       </div>
 
+      <button
+        className={styles["mobile-toggle"]}
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      >
+        ☰
+      </button>
+
       {!loading && (
-        <div className={styles.pages}>
+        <div
+          className={`${styles.pages} ${
+            mobileMenuOpen ? styles.open : styles.closed
+          }`}
+        >
           {user?.tip === "admin" ? (
             <>
               <Link to="/admin/dashboard">

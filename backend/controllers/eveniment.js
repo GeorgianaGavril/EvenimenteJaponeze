@@ -1,4 +1,5 @@
 const EvenimentDb = require("../models").Eveniment;
+const ArtistEvenimentDb = require("../models").ArtistEveniment;
 const SalaDb = require("../models").Sala;
 const {
   functieEroare,
@@ -17,10 +18,38 @@ const controller = {
 
   createEvent: async (req, res) => {
     try {
-      const event = await EvenimentDb.create({
-        ...req.body,
+      const {
+        titlu,
+        data,
+        durata,
+        descriere,
+        pretVIP,
+        pretLoja,
+        pretStandard,
+        salaId,
+        artisti = [],
+      } = req.body;
+
+      const eveniment = await EvenimentDb.create({
+        titlu,
+        data,
+        durata,
+        descriere,
+        pretVIP,
+        pretLoja,
+        pretStandard,
+        salaId,
       });
-      res.status(201).json(event);
+
+      for (const artist of artisti) {
+        await ArtistEvenimentDb.create({
+          artistId: artist.id,
+          evenimentId: eveniment.id,
+          rol: artist.rol || "necunoscut",
+        });
+      }
+
+      res.status(201).json(eveniment);
     } catch (err) {
       functieEroare(err, "Eroare la crearea evenimentului", res);
     }

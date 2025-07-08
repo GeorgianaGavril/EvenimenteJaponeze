@@ -162,3 +162,57 @@ form button:hover,
   background-color: white;
   color: #4f0a01;
 }
+
+@media (max-width: 768px) {
+  .signin {
+    flex-direction: column;
+    width: 95%;
+    max-width: 95%;
+  }
+
+  .left,
+  .right,
+  .signup .left,
+  .signup .right {
+    padding: 30px 20px;
+    flex: unset;
+    width: 100%;
+    text-align: center;
+  }
+
+  .left h3,
+  .right h1 {
+    font-size: 22px;
+  }
+
+  .right h5 {
+    font-size: 16px;
+  }
+
+  form input {
+    font-size: 15px;
+  }
+
+  .input-wrapper .icon {
+    left: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .input-wrapper input {
+    padding: 10px 14px 10px 40px;
+  }
+
+  form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .right button,
+  .signup .left button {
+    width: 100%;
+    font-size: 15px;
+    padding: 10px;
+  }
+}
