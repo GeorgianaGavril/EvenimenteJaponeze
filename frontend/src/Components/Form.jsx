@@ -46,12 +46,17 @@ const Form = ({
 
       const dataFormatata =
         dataInitiala && !isNaN(new Date(dataInitiala))
-          ? new Date(dataInitiala).toISOString().slice(0, 16)
+          ? new Date(
+              new Date(dataInitiala).getTime() -
+                new Date(dataInitiala).getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .slice(0, 16)
           : "";
 
       setFormData({
         titlu: initialValues.titlu || "",
-        data: dataFormatata || "",
+        data: dataFormatata,
         durata: initialValues.durata || "",
         descriere: initialValues.descriere || "",
         pretVIP: initialValues.pretVIP || "",

@@ -6,7 +6,7 @@ import MonthlyUserGrowthCard from "../Components/MonthlyUserGrowth";
 import TicketsPerHourChart from "../Components/TicketsPerHourChart";
 import TicketsPerEventChart from "../Components/TicketsPerEventChart";
 import TicketsPerMonthChart from "../Components/TicketsPerMonthChart";
-import CategoryRateChart from "../Components/CategoryRateChart";
+import CategoryHeatmapChart from "../Components/CategoryHeatmapChart";
 import { Container, Row, Col } from "react-bootstrap";
 
 function Statistics() {
@@ -55,7 +55,7 @@ function Statistics() {
         {/* 🔵 Rând grafice principale */}
         <Row className="gy-4 gx-4">
           <Col xs={12} sm={6} md={4} lg={3}>
-            <CategoryRateChart />
+            <CategoryHeatmapChart />
           </Col>
           <Col xs={12} sm={12} md={6} lg={9}>
             <TicketsPerMonthChart />

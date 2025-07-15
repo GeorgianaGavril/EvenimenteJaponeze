@@ -15,6 +15,8 @@ export default function ModifyEvent() {
   const fetchEvenimente = async () => {
     try {
       const res = await axios.get(`http://localhost:3004/api/event/${id}`);
+      console.log("Răspuns API:", res.data);
+
       setEvent(res.data);
     } catch (err) {
       console.log(err.message);
@@ -37,12 +39,16 @@ export default function ModifyEvent() {
   return (
     <>
       <Navbar />
-      <Form
-        onSubmit={handleModifyEvent}
-        initialValues={event}
-        titluFormular="Modifică Eveniment"
-        isEdit={true}
-      />
+      {event ? (
+        <Form
+          onSubmit={handleModifyEvent}
+          initialValues={event}
+          titluFormular="Modifică Eveniment"
+          isEdit={true}
+        />
+      ) : (
+        <p>Se încarcă datele evenimentului...</p>
+      )}
     </>
   );
 }

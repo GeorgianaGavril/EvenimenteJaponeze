@@ -351,11 +351,24 @@ function Tickets() {
       return;
     }
 
+    let email = "";
+    try {
+      const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+      const decoded = JSON.parse(atob(base64));
+      email = decoded.email;
+    } catch (err) {
+      console.error("Token invalid:", err);
+      alert("Sesiune expirată. Te rugăm să te autentifici din nou.");
+      localStorage.removeItem("token");
+      navigate("/?login=true");
+      return;
+    }
+
     try {
       const {
         data: { url, sessionId },
       } = await axios.post("http://localhost:3004/api/stripe/checkout", {
-        email: "ionpopescu@gmail.com",
+        email,
         eventId: event.id,
         bilete,
         pretVIP: event.pretVIP,

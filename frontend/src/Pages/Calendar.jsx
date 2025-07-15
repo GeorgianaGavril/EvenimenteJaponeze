@@ -74,7 +74,7 @@ function Calendar() {
                   data.getMonth() === date.getMonth() &&
                   data.getFullYear() === date.getFullYear()
                 );
-              })
+              }) && date >= new Date()
                 ? "event-day"
                 : "non-event-day"
             }

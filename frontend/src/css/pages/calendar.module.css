@@ -79,7 +79,7 @@
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.85); /* fallback */
+  background-color: rgba(255, 255, 255, 0.85);
 
   backdrop-filter: blur(2px);
   z-index: 1;
@@ -89,7 +89,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../../assets/images/Kabuki.png"); /* 🖼️ adaugă corect pathul */
+  background-image: url("../../assets/images/Kabuki.png");
   background-size: cover;
   background-position: center;
   opacity: 0.3;
@@ -136,6 +136,14 @@
   background-color: #4f0a01;
   color: #e4ceba;
   transform: scale(1.05);
+}
+
+.eventCard button:focus,
+.eventCard button:active {
+  outline: none;
+  background-color: #4f0a01;
+  color: #e4ceba;
+  box-shadow: none;
 }
 
 .cardContent {

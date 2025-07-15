@@ -110,6 +110,8 @@ const webhookHandler = async (req, res) => {
       return res.status(500).json({ error: "PDF generation failed" });
     }
 
+    console.log(recipientEmail);
+
     // 3) Trimitem email cu PDF atașat
     const mailOptions = {
       from: {

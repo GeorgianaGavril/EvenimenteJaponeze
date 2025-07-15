@@ -3,9 +3,9 @@ import Card from "react-bootstrap/Card";
 import Navbar from "../Components/Navbar";
 import styles from "../css/pages/home.module.css";
 import sakuraImg from "../assets/images/Sakura branch cream.png";
-import cardImg1 from "../assets/images/213.jpg";
-import cardImg2 from "../assets/images/43078.jpg";
-import cardImg3 from "../assets/images/7032.jpg";
+import cardImg1 from "../assets/images/Card1.png";
+import cardImg2 from "../assets/images/Card2.png";
+import cardImg3 from "../assets/images/Card3.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -160,9 +160,10 @@ function Home() {
 
       <footer className={styles["footer-section"]}>
         <div className={styles["footer-content"]}>
-          <p>© {new Date().getFullYear()} Cultura Japoneză</p>
+          <p>© {new Date().getFullYear()} Sakura Stage</p>
           <p>
-            Contact: <a href="mailto:contact@japonia.ro">contact@japonia.ro</a>
+            Contact:{" "}
+            <a href="mailto:sakurastage@gmail.ro">www.sakurastage.ro</a>
           </p>
         </div>
       </footer>

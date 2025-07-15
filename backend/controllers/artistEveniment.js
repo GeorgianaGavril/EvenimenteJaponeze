@@ -23,7 +23,6 @@ const controller = {
   getByEvenimentId: async (req, res) => {
     const evenimentId = req.params.evenimentId;
 
-    console.log("hi");
     try {
       const artisti = await ArtistEveniment.findAll({
         where: { evenimentId },
